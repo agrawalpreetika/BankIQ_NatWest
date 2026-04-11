@@ -46,34 +46,55 @@ Rules:
 
     return response.choices[0].message.content.strip()
 
-def generate_chart_data(data):
-    # ❌ No data
+# def generate_chart_data(data):
+#     # ❌ No data
+#     if not data or isinstance(data, dict):
+#         return []
+
+#     keys = list(data[0].keys())
+
+#     # ❌ Only one column → no chart possible
+#     if len(keys) < 2:
+#         return []
+
+#     # ✅ Known patterns
+#     if "region" in keys and "revenue" in keys:
+#         return [{"label": row["region"], "value": row["revenue"]} for row in data]
+
+#     if "date" in keys and "amount" in keys:
+#         return [{"label": row["date"], "value": row["amount"]} for row in data]
+
+#     # ✅ Safe fallback
+#     first_key, second_key = keys[0], keys[1]
+
+#     return [
+#         {
+#             "label": str(row[first_key]),
+#             "value": row[second_key]
+#         }
+#         for row in data
+#     ]
+    
+    
+def generate_chart_data(data, chart_type="bar"):
     if not data or isinstance(data, dict):
-        return []
+        return {"type": "bar", "data": []}
 
     keys = list(data[0].keys())
 
-    # ❌ Only one column → no chart possible
     if len(keys) < 2:
-        return []
+        return {"type": chart_type, "data": []}
 
-    # ✅ Known patterns
-    if "region" in keys and "revenue" in keys:
-        return [{"label": row["region"], "value": row["revenue"]} for row in data]
+    x_key = keys[0]
+    y_key = keys[1]
 
-    if "date" in keys and "amount" in keys:
-        return [{"label": row["date"], "value": row["amount"]} for row in data]
-
-    # ✅ Safe fallback
-    first_key, second_key = keys[0], keys[1]
-
-    return [
-        {
-            "label": str(row[first_key]),
-            "value": row[second_key]
-        }
-        for row in data
-    ]
+    return {
+        "type": chart_type,
+        "data": [
+            {"label": str(row[x_key]), "value": row[y_key]}
+            for row in data
+        ]
+    }
     
 def generate_root_cause(data, user_query):
     from app.services.llm import client

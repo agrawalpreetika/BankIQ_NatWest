@@ -18,6 +18,7 @@ from app.services.anomaly import detect_anomaly
 from app.utils.query_router import detect_query_type
 import pandas as pd
 from app.services.forecast_service import run_forecast
+from app.utils.understand_query import parse_query_intent
 
 router = APIRouter()
 
@@ -185,13 +186,16 @@ def handle_query(request: dict):
     "recommendation": None,
 
     # ✅ send forecast as chart
-    "chart": [
+    "chart": {
+    "type": "line",
+    "data": [
         {
             "label": row["ds"],
             "value": row["yhat"]
         }
         for row in forecast_data
-    ],
+    ]
+},
 
     "sql": sql_query,
 
@@ -225,6 +229,10 @@ def handle_query(request: dict):
     sql_query = fix_sql(sql_query)
 
     data = run_query(sql_query)
+    
+    chart_type = parse_query_intent(user_query)
+
+    chart = generate_chart_data(data, chart_type)
 
     return {
         "type": "analysis",
@@ -233,7 +241,7 @@ def handle_query(request: dict):
             "root_cause": generate_root_cause(data, user_query)
         },
         "recommendation": generate_recommendation(data, user_query),
-        "chart": generate_chart_data(data),
+        "chart": chart,
         "sql": sql_query,
         "data": data
     }

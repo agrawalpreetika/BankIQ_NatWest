@@ -27,7 +27,7 @@ export default function Dashboard() {
             {response && (
                 <div className="mt-6 space-y-4">
                     <InsightCard data={response} />
-                    <ChartView chartData={response.chart} />
+                    <ChartView chart={response.chart} />
                     <WarningBox warning={response.warning} />
                 </div>
             )}
