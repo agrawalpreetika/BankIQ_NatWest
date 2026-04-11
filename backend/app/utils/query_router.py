@@ -4,7 +4,7 @@ def detect_query_type(query: str):
 
     forecast_keywords = [
         "forecast", "predict", "future",
-        "next week", "next month", "projection"
+        "next week", "next month", "projection", "next"
     ]
 
     anomaly_keywords = [
