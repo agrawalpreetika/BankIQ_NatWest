@@ -1,0 +1,26 @@
+# ================= FRONTEND =================
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+frontend/coverage
+frontend/build
+
+# frontend env files
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ================= BACKEND =================
+backend/node_modules
+backend/.env   # 🔥 VERY IMPORTANT
+backend/venv/
+
+# ================= GENERAL =================
+node_modules
+.env
+.DS_Store
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
