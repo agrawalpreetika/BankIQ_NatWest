@@ -6,6 +6,7 @@ frontend/coverage
 frontend/build
 
 # frontend env files
+frontend/.env
 frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
@@ -13,7 +14,7 @@ frontend/.env.production.local
 
 # ================= BACKEND =================
 backend/node_modules
-backend/.env   # 🔥 VERY IMPORTANT
+backend/.env   
 backend/venv/
 
 # ================= GENERAL =================
