@@ -101,6 +101,24 @@ def generate_root_cause(data, user_query):
 
     prompt = f"""
 You are a banking analyst.
+TASK:
+Find 2-3 root causes from the data.
+
+STRICT OUTPUT FORMAT:
+- Return ONLY numbered points
+- Each point MUST follow this format:
+
+1. Title — short explanation
+2. Title — short explanation
+3. Title — short explanation
+
+RULES:
+- NO tables
+- NO markdown
+- NO paragraphs
+- NO extra text
+- NO "based on data" sentences
+- Keep it concise and factual
 
 User asked:
 {user_query}
@@ -182,3 +200,26 @@ Output in simple language (2-3 lines).
     )
 
     return response.choices[0].message.content.strip()
+
+
+def generate_forecast_recommendation(forecast_data, user_query):
+    from app.services.llm import client
+
+    prompt = prompt = BASE_PROMPT  + f"""
+    You are a banking analyst.
+
+    Forecast data:
+    {forecast_data}
+
+    Explain:
+    Explain forecast in 1-2 lines (summary)
+
+    Output the recommendation in 1-2 lines
+"""
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.3
+    )
+
+    return response.choices[0].message.content.strip()      

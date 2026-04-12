@@ -8,18 +8,20 @@ import { askQuery } from "../services/api";
 
 const NAV = [
     { id: "dash", label: "Dashboard", icon: IconDashboard },
-    { id: "transfer", label: "Transfer", icon: IconTransfer },
-    { id: "tx", label: "Transactions", icon: IconTx },
-    { id: "accounts", label: "Accounts & Cards", icon: IconCards },
-    { id: "inv", label: "Investments", icon: IconChart },
+    { id: "warnings", label: "Warnings", icon: IconWarning },
+    { id: "trends", label: "Trends", icon: IconChart },
 ];
 
-const MOCK_TX = [
-    { id: 1, name: "Salary deposit", date: "Today", amount: 2400, positive: true },
-    { id: 2, name: "Coffee Lab", date: "Yesterday", amount: -4.5, positive: false },
-    { id: 3, name: "Rent", date: "12 Apr", amount: -1200, positive: false },
-    { id: 4, name: "Transfer — savings", date: "10 Apr", amount: 500, positive: true },
-    { id: 5, name: "Transport", date: "09 Apr", amount: -32, positive: false },
+const QUICK_QUERIES = [
+    "Show total revenue",
+    "Show revenue by region",
+    "Customers churned by region",
+    "Average resolution time by issue type",
+    "Show transaction trend over time",
+    "Show failed transactions",
+    "Forecast revenue for next 7 days",
+    "Show complaints trend",
+    "Compare North vs South revenue"
 ];
 
 const SPENDING = [
@@ -38,10 +40,8 @@ const QUICK_CONTACTS = [
 
 const PAGE_TITLES = {
     dash: { title: "Dashboard", subtitle: "Overview · BankIQ workspace" },
-    transfer: { title: "Transfer", subtitle: "Send money between accounts or contacts" },
-    tx: { title: "Transactions", subtitle: "Activity and history" },
-    accounts: { title: "Accounts & Cards", subtitle: "Balances, cards, and details" },
-    inv: { title: "Investments", subtitle: "Holdings and performance" },
+    warnings: { title: "Warnings", subtitle: "Anomaly detections and alerts" },
+    trends: { title: "Trends", subtitle: "Analytics and performance charts" },
     settings: { title: "Settings", subtitle: "Preferences and security" },
     logout: { title: "Sign out", subtitle: "Session" },
 };
@@ -49,12 +49,14 @@ const PAGE_TITLES = {
 export default function Dashboard() {
     const [response, setResponse] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [activeQuery, setActiveQuery] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [txTab, setTxTab] = useState("recent");
     const [activeNav, setActiveNav] = useState("dash");
 
     const handleAsk = async (query) => {
         setLoading(true);
+        setActiveQuery(query);
         const res = await askQuery(query);
         setResponse(res);
         setLoading(false);
@@ -83,14 +85,15 @@ export default function Dashboard() {
 
             {/* Sidebar */}
             <aside
-                className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-white/10 bg-[#040a14]/95 shadow-2xl backdrop-blur-md transition-transform duration-200 md:static md:z-0 md:translate-x-0 ${
-                    sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-                }`}
+                className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-white/10 bg-[#040a14]/95 shadow-2xl backdrop-blur-md transition-transform duration-200 md:static md:z-0 md:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+                    }`}
             >
                 <div className="flex items-center gap-2 border-b border-white/10 px-5 py-5">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 text-lg shadow-lg">
-                        🏦
-                    </span>
+                    <img
+                        src="/Logo.jpeg"
+                        alt="BankIQ Logo"
+                        className="h-10 w-10 rounded-xl object-cover shadow-lg"
+                    />
                     <div>
                         <p className="text-sm font-bold text-white">BankIQ</p>
                         <p className="text-[11px] text-slate-500">NatWest intelligence</p>
@@ -106,11 +109,10 @@ export default function Dashboard() {
                                 key={item.id}
                                 type="button"
                                 onClick={() => goNav(item.id)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${
-                                    active
-                                        ? "bg-white/10 text-white shadow-inner"
-                                        : "text-slate-400 hover:bg-white/5 hover:text-white"
-                                }`}
+                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${active
+                                    ? "bg-white/10 text-white shadow-inner"
+                                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                                    }`}
                             >
                                 <Icon className="h-5 w-5 shrink-0 opacity-90" />
                                 {item.label}
@@ -123,11 +125,10 @@ export default function Dashboard() {
                     <button
                         type="button"
                         onClick={() => goNav("settings")}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-white/5 ${
-                            activeNav === "settings"
-                                ? "bg-white/10 text-white"
-                                : "text-slate-400 hover:text-white"
-                        }`}
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-white/5 ${activeNav === "settings"
+                            ? "bg-white/10 text-white"
+                            : "text-slate-400 hover:text-white"
+                            }`}
                     >
                         <IconSettings className="h-5 w-5" />
                         Settings
@@ -135,11 +136,10 @@ export default function Dashboard() {
                     <button
                         type="button"
                         onClick={() => goNav("logout")}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-red-500/10 ${
-                            activeNav === "logout"
-                                ? "bg-red-500/15 text-red-200"
-                                : "text-slate-400 hover:text-red-300"
-                        }`}
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-red-500/10 ${activeNav === "logout"
+                            ? "bg-red-500/15 text-red-200"
+                            : "text-slate-400 hover:text-red-300"
+                            }`}
                     >
                         <IconLogout className="h-5 w-5" />
                         Logout
@@ -199,219 +199,166 @@ export default function Dashboard() {
                                 <ChatBox onAsk={handleAsk} disabled={loading} />
                             </section>
 
-                            {loading && (
-                        <div
-                            className="flex items-center gap-4 rounded-2xl border border-sky-500/20 bg-sky-950/30 px-5 py-4"
-                            role="status"
-                            aria-live="polite"
-                        >
-                            <span className="relative flex h-10 w-10 shrink-0">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400/40 opacity-75" />
-                                <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-blue-700 text-sm font-bold text-white">
-                                    IQ
-                                </span>
-                            </span>
-                            <div>
-                                <p className="font-medium text-white">Working on your answer…</p>
-                                <p className="text-sm text-slate-400">
-                                    Retrieving insights and building visuals.
-                                </p>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Metrics */}
-                    <div className="grid gap-4 sm:grid-cols-2">
-                        <MetricCard
-                            title="Total balance"
-                            value="USD 10,000.00"
-                            trend="+2.4%"
-                            trendUp
-                            sub="vs last month"
-                        />
-                        <MetricCard
-                            title="Total savings"
-                            value="USD 5,000.00"
-                            spark
-                            sub="Goal on track"
-                        />
-                    </div>
-
-                    {/* Chart + transactions */}
-                    <div className="grid gap-4 lg:grid-cols-12 lg:items-stretch">
-                        <div className="flex flex-col lg:col-span-8">
-                            <div className="flex min-h-[320px] flex-1 flex-col rounded-2xl border border-white/10 bg-[#030712]/80 p-4 shadow-xl shadow-black/30 backdrop-blur-sm sm:p-5">
-                                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                                    <div>
-                                        <h2 className="text-lg font-semibold text-white">
-                                            Insights chart
-                                        </h2>
-                                        <p className="text-xs text-slate-500">
-                                            From your latest BankIQ response
-                                        </p>
-                                    </div>
-                                    <select
-                                        className="rounded-lg border border-white/10 bg-[#0a1424] px-3 py-2 text-xs font-medium text-slate-300 focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40"
-                                        defaultValue="7d"
-                                        aria-label="Time range"
-                                    >
-                                        <option value="7d">Last 7 days</option>
-                                        <option value="30d">Last 30 days</option>
-                                        <option value="90d">Last 90 days</option>
-                                    </select>
-                                </div>
-                                <div
-                                    className={`min-h-0 flex-1 transition-opacity ${loading ? "opacity-50" : "opacity-100"}`}
-                                >
-                                    <ChartView chart={response?.chart} embedded />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="lg:col-span-4">
-                            <div className="flex h-full min-h-[320px] flex-col rounded-2xl border border-white/10 bg-white/[0.04] shadow-xl backdrop-blur-sm">
-                                <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-                                    <h2 className="text-sm font-semibold text-white">
-                                        Transactions
-                                    </h2>
-                                    <div className="flex rounded-lg bg-black/30 p-0.5 text-[11px] font-medium">
-                                        <button
-                                            type="button"
-                                            onClick={() => setTxTab("recent")}
-                                            className={`rounded-md px-2 py-1 ${
-                                                txTab === "recent"
-                                                    ? "bg-white/15 text-white"
-                                                    : "text-slate-500 hover:text-slate-300"
-                                            }`}
-                                        >
-                                            Recent
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setTxTab("all")}
-                                            className={`rounded-md px-2 py-1 ${
-                                                txTab === "all"
-                                                    ? "bg-white/15 text-white"
-                                                    : "text-slate-500 hover:text-slate-300"
-                                            }`}
-                                        >
-                                            All
-                                        </button>
-                                    </div>
-                                </div>
-                                <ul className="flex-1 space-y-0 overflow-y-auto px-2 py-2">
-                                    {MOCK_TX.map((t) => (
-                                        <li
-                                            key={t.id}
-                                            className="flex items-center gap-3 rounded-xl px-2 py-2.5 hover:bg-white/[0.04]"
-                                        >
-                                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-700 to-slate-900 text-xs font-bold text-slate-300">
-                                                {t.name.slice(0, 1)}
-                                            </span>
-                                            <div className="min-w-0 flex-1">
-                                                <p className="truncate text-sm font-medium text-white">
-                                                    {t.name}
-                                                </p>
-                                                <p className="text-xs text-slate-500">{t.date}</p>
-                                            </div>
-                                            <p
-                                                className={`shrink-0 text-sm font-semibold tabular-nums ${
-                                                    t.positive ? "text-emerald-400" : "text-slate-200"
-                                                }`}
-                                            >
-                                                {t.amount > 0 ? "+" : ""}
-                                                {t.amount.toLocaleString("en-US", {
-                                                    style: "currency",
-                                                    currency: "USD",
-                                                })}
+                            {/* Active Query Card */}
+                            {activeQuery && (
+                                <div className={`relative overflow-hidden rounded-2xl border p-5 shadow-lg backdrop-blur-sm transition-colors duration-300 ${loading ? 'bg-sky-950/30 border-sky-500/30' : 'bg-white/[0.04] border-white/10'}`}>
+                                    <div className="flex items-center gap-3">
+                                        <span className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg shadow-inner transition-colors duration-300 ${loading ? 'bg-sky-500/20 text-sky-400' : 'bg-white/5 text-slate-400'}`}>
+                                            {loading && <span className="absolute inline-flex h-full w-full animate-ping rounded-xl bg-sky-400/30 opacity-75" />}
+                                            {loading ? <IconSpinner className="relative z-10 h-5 w-5 animate-spin" /> : <IconSearch className="h-5 w-5" />}
+                                        </span>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                                {loading ? "Running Query" : "Last Query"}
                                             </p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Insight + warning */}
-                    {response && (
-                        <div
-                            className={`space-y-4 transition-opacity ${loading ? "opacity-60" : "opacity-100"}`}
-                        >
-                            <InsightCard data={response} />
-                            <WarningBox warning={response.warning} />
-                        </div>
-                    )}
-
-                    {/* Bottom widgets */}
-                    <div className="grid gap-4 pb-4 md:grid-cols-3">
-                        <div className="rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-950/50 to-[#0a0f1c] p-5 shadow-lg">
-                            <h3 className="text-sm font-semibold text-white">Goals</h3>
-                            <p className="mt-1 text-xs text-violet-200/70">Savings target</p>
-                            <div className="mt-4">
-                                <div className="h-2.5 overflow-hidden rounded-full bg-black/40">
-                                    <div
-                                        className="h-full w-[60%] rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-500"
-                                        aria-hidden
-                                    />
-                                </div>
-                                <p className="mt-2 text-sm font-semibold text-white">60% reached</p>
-                            </div>
-                        </div>
-
-                        <div className="rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-950/40 to-[#0a0f1c] p-5 shadow-lg">
-                            <h3 className="text-sm font-semibold text-white">Spending overview</h3>
-                            <p className="mt-1 text-xs text-orange-200/70">By category</p>
-                            <ul className="mt-4 space-y-3">
-                                {SPENDING.map((s) => (
-                                    <li key={s.label}>
-                                        <div className="mb-1 flex justify-between text-xs">
-                                            <span className="text-slate-400">{s.label}</span>
-                                            <span className="text-slate-300">{s.pct}%</span>
+                                            <p className={`truncate mt-0.5 text-lg font-bold transition-all duration-300 ${loading ? 'text-sky-400' : 'text-white'}`}>
+                                                {activeQuery}
+                                            </p>
                                         </div>
-                                        <div className="h-1.5 overflow-hidden rounded-full bg-black/40">
+                                    </div>
+                                </div>
+                            )}
+
+
+
+                            {/* Chart + transactions */}
+                            <div className="grid gap-4 lg:grid-cols-12 lg:items-stretch">
+                                <div className="flex flex-col lg:col-span-8">
+                                    <div className="flex min-h-[320px] flex-1 flex-col rounded-2xl border border-white/10 bg-[#030712]/80 p-4 shadow-xl shadow-black/30 backdrop-blur-sm sm:p-5">
+                                        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                                            <div>
+                                                <h2 className="text-lg font-semibold text-white">
+                                                    Insights chart
+                                                </h2>
+                                                <p className="text-xs text-slate-500">
+                                                    From your latest BankIQ response
+                                                </p>
+                                            </div>
+                                            {/* <select
+                                                className="rounded-lg border border-white/10 bg-[#0a1424] px-3 py-2 text-xs font-medium text-slate-300 focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40"
+                                                defaultValue="7d"
+                                                aria-label="Time range"
+                                            >
+                                                <option value="7d">Last 7 days</option>
+                                                <option value="30d">Last 30 days</option>
+                                                <option value="90d">Last 90 days</option>
+                                            </select> */}
+                                        </div>
+                                        <div
+                                            className={`min-h-0 flex-1 transition-opacity ${loading ? "opacity-50" : "opacity-100"}`}
+                                        >
+                                            <ChartView chart={response?.chart} embedded />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="lg:col-span-4">
+                                    <div className="flex h-full min-h-[320px] flex-col rounded-2xl border border-white/10 bg-white/[0.04] shadow-xl backdrop-blur-sm">
+
+                                        {/* Header */}
+                                        <div className="border-b border-white/10 px-4 py-3">
+                                            <h2 className="text-sm font-semibold text-white">
+                                                ⚡ Quick Insights
+                                            </h2>
+                                            <p className="text-xs text-slate-400">
+                                                Click to run common queries
+                                            </p>
+                                        </div>
+
+                                        {/* Query List */}
+                                        <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
+                                            {QUICK_QUERIES.map((query, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => handleAsk(query)}
+                                                    className="w-full text-left rounded-lg px-3 py-1 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition"
+                                                >
+                                                    {query}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Insight + warning */}
+                            {response && (
+                                <div
+                                    className={`space-y-4 transition-opacity ${loading ? "opacity-60" : "opacity-100"}`}
+                                >
+                                    <InsightCard data={response} />
+                                    <WarningBox warning={response.warning} />
+                                </div>
+                            )}
+
+                            {/* Bottom widgets */}
+                            {/* <div className="grid gap-4 pb-4 md:grid-cols-3">
+                                <div className="rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-950/50 to-[#0a0f1c] p-5 shadow-lg">
+                                    <h3 className="text-sm font-semibold text-white">Goals</h3>
+                                    <p className="mt-1 text-xs text-violet-200/70">Savings target</p>
+                                    <div className="mt-4">
+                                        <div className="h-2.5 overflow-hidden rounded-full bg-black/40">
                                             <div
-                                                className={`h-full rounded-full ${s.color}`}
-                                                style={{ width: `${s.pct}%` }}
+                                                className="h-full w-[60%] rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-500"
+                                                aria-hidden
                                             />
                                         </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                                        <p className="mt-2 text-sm font-semibold text-white">60% reached</p>
+                                    </div>
+                                </div>
 
-                        <div className="rounded-2xl border border-white/10 bg-[#030712]/90 p-5 shadow-xl">
-                            <h3 className="text-sm font-semibold text-white">Quick transfer</h3>
-                            <p className="mt-1 text-xs text-slate-500">Frequent contacts</p>
-                            <div className="mt-4 flex flex-wrap items-center gap-3">
-                                {QUICK_CONTACTS.map((g, i) => (
-                                    <span
-                                        key={i}
-                                        className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${g} text-sm font-bold text-white shadow-lg ring-2 ring-[#070b14]`}
-                                    >
-                                        {String.fromCharCode(65 + i)}
-                                    </span>
-                                ))}
-                                <button
-                                    type="button"
-                                    className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-white/20 text-xl text-slate-500 transition hover:border-sky-400/50 hover:text-sky-300"
-                                    aria-label="Add contact"
-                                >
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                                <div className="rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-950/40 to-[#0a0f1c] p-5 shadow-lg">
+                                    <h3 className="text-sm font-semibold text-white">Spending overview</h3>
+                                    <p className="mt-1 text-xs text-orange-200/70">By category</p>
+                                    <ul className="mt-4 space-y-3">
+                                        {SPENDING.map((s) => (
+                                            <li key={s.label}>
+                                                <div className="mb-1 flex justify-between text-xs">
+                                                    <span className="text-slate-400">{s.label}</span>
+                                                    <span className="text-slate-300">{s.pct}%</span>
+                                                </div>
+                                                <div className="h-1.5 overflow-hidden rounded-full bg-black/40">
+                                                    <div
+                                                        className={`h-full rounded-full ${s.color}`}
+                                                        style={{ width: `${s.pct}%` }}
+                                                    />
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className="rounded-2xl border border-white/10 bg-[#030712]/90 p-5 shadow-xl">
+                                    <h3 className="text-sm font-semibold text-white">Quick transfer</h3>
+                                    <p className="mt-1 text-xs text-slate-500">Frequent contacts</p>
+                                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                                        {QUICK_CONTACTS.map((g, i) => (
+                                            <span
+                                                key={i}
+                                                className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${g} text-sm font-bold text-white shadow-lg ring-2 ring-[#070b14]`}
+                                            >
+                                                {String.fromCharCode(65 + i)}
+                                            </span>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-white/20 text-xl text-slate-500 transition hover:border-sky-400/50 hover:text-sky-300"
+                                            aria-label="Add contact"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> */}
                         </>
                     )}
 
-                    {activeNav === "transfer" && (
-                        <TransferSection onBack={() => goNav("dash")} />
+                    {activeNav === "warnings" && (
+                        <WarningsSection onBack={() => goNav("dash")} />
                     )}
-                    {activeNav === "tx" && (
-                        <TransactionsSection txTab={txTab} setTxTab={setTxTab} />
+                    {activeNav === "trends" && (
+                        <TrendsSection onBack={() => goNav("dash")} />
                     )}
-                    {activeNav === "accounts" && <AccountsSection />}
-                    {activeNav === "inv" && <InvestmentsSection />}
                     {activeNav === "settings" && <SettingsSection />}
                     {activeNav === "logout" && <LogoutSection onStay={() => goNav("dash")} />}
                 </div>
@@ -420,8 +367,28 @@ export default function Dashboard() {
     );
 }
 
-function TransferSection({ onBack }) {
-    const [sent, setSent] = useState(false);
+function WarningsSection({ onBack }) {
+    const warnings = [
+        {
+            title: "Revenue Drop Detected",
+            desc: "Regional revenue in the North has dropped by 18% compared to the previous 7-day moving average.",
+            severity: "high",
+            date: "Today, 09:45 AM"
+        },
+        {
+            title: "Transaction Failure Spike",
+            desc: "Payment gateway failures exceeded threshold (currently at 4.2%). Primary issues traced to processor timeouts.",
+            severity: "critical",
+            date: "Yesterday, 14:20 PM"
+        },
+        {
+            title: "Elevated Complaint Volume",
+            desc: "Customer complaints regarding card declines have spiked temporarily by 12%. No underlying severe system outage detected yet.",
+            severity: "medium",
+            date: "10 Apr, 11:00 AM"
+        }
+    ];
+
     return (
         <div className="space-y-5">
             <button
@@ -432,224 +399,55 @@ function TransferSection({ onBack }) {
                 ← Back to overview
             </button>
             <div className="grid gap-4 lg:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
-                    <h2 className="text-lg font-semibold text-white">New transfer</h2>
-                    <p className="mt-1 text-sm text-slate-500">Demo — no funds are moved.</p>
-                    <form
-                        className="mt-6 space-y-4"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            setSent(true);
-                        }}
-                    >
-                        <label className="block text-sm">
-                            <span className="text-slate-400">From</span>
-                            <select className="mt-1.5 w-full rounded-xl border border-white/10 bg-[#0a1424] px-3 py-2.5 text-white focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40">
-                                <option>Current account ·••• 8891</option>
-                                <option>Savings ·••• 1024</option>
-                            </select>
-                        </label>
-                        <label className="block text-sm">
-                            <span className="text-slate-400">To</span>
-                            <input
-                                type="text"
-                                required
-                                placeholder="Name or account"
-                                className="mt-1.5 w-full rounded-xl border border-white/10 bg-[#0a1424] px-3 py-2.5 text-white placeholder:text-slate-600 focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40"
-                            />
-                        </label>
-                        <label className="block text-sm">
-                            <span className="text-slate-400">Amount (USD)</span>
-                            <input
-                                type="number"
-                                min="0"
-                                step="0.01"
-                                required
-                                placeholder="0.00"
-                                className="mt-1.5 w-full rounded-xl border border-white/10 bg-[#0a1424] px-3 py-2.5 text-white placeholder:text-slate-600 focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40"
-                            />
-                        </label>
-                        <label className="block text-sm">
-                            <span className="text-slate-400">Reference</span>
-                            <input
-                                type="text"
-                                placeholder="Optional"
-                                className="mt-1.5 w-full rounded-xl border border-white/10 bg-[#0a1424] px-3 py-2.5 text-white placeholder:text-slate-600 focus:border-sky-500/50 focus:outline-none focus:ring-1 focus:ring-sky-500/40"
-                            />
-                        </label>
-                        <button
-                            type="submit"
-                            className="w-full rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 py-3 text-sm font-semibold text-white transition hover:brightness-110"
-                        >
-                            Review & send
-                        </button>
-                    </form>
-                    {sent && (
-                        <p className="mt-4 rounded-lg border border-emerald-500/30 bg-emerald-950/40 px-3 py-2 text-sm text-emerald-200">
-                            Transfer queued (demo). No payment was sent.
-                        </p>
-                    )}
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-[#030712]/90 p-6 shadow-xl">
-                    <h3 className="text-sm font-semibold text-white">Quick transfer</h3>
-                    <p className="mt-1 text-xs text-slate-500">Frequent contacts</p>
-                    <div className="mt-6 flex flex-wrap items-center gap-3">
-                        {QUICK_CONTACTS.map((g, i) => (
-                            <span
-                                key={i}
-                                className={`flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${g} text-sm font-bold text-white shadow-lg ring-2 ring-[#070b14]`}
-                            >
-                                {String.fromCharCode(65 + i)}
+                {warnings.map((w, i) => (
+                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm shadow-xl">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-sm font-semibold text-white">{w.title}</h3>
+                            <span className={`px-2 py-1 text-[10px] uppercase tracking-wider font-bold rounded-lg ${w.severity === 'critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : w.severity === 'high' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}`}>
+                                {w.severity}
                             </span>
-                        ))}
-                        <button
-                            type="button"
-                            className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-white/20 text-xl text-slate-500 transition hover:border-sky-400/50 hover:text-sky-300"
-                            aria-label="Add contact"
-                        >
-                            +
-                        </button>
+                        </div>
+                        <p className="text-sm text-slate-400 leading-relaxed">{w.desc}</p>
+                        <p className="mt-4 text-xs font-medium text-slate-500">{w.date}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function TrendsSection({ onBack }) {
+    const mockChart = {
+        type: "line",
+        data: [
+            {"label": "Mon", "value": 400},
+            {"label": "Tue", "value": 300},
+            {"label": "Wed", "value": 550},
+            {"label": "Thu", "value": 450},
+            {"label": "Fri", "value": 700},
+            {"label": "Sat", "value": 650},
+            {"label": "Sun", "value": 800}
+        ]
+    };
+
+    return (
+        <div className="space-y-5">
+            <button
+                type="button"
+                onClick={onBack}
+                className="text-sm font-medium text-sky-400 hover:text-sky-300"
+            >
+                ← Back to overview
+            </button>
+            
+            <div className="grid gap-4">
+                <div className="flex flex-col rounded-2xl border border-white/10 bg-[#030712]/80 p-5 shadow-xl shadow-black/30 backdrop-blur-sm">
+                    <h2 className="text-lg font-semibold text-white mb-2">Weekly Revenue Trend</h2>
+                    <p className="text-xs text-slate-500 mb-6">Aggregate transactions showing steady weekend growth peaking clearly on Sundays.</p>
+                    <div className="min-h-[300px] flex-1">
+                        <ChartView chart={mockChart} embedded />
                     </div>
                 </div>
-            </div>
-        </div>
-    );
-}
-
-function TransactionsSection({ txTab, setTxTab }) {
-    return (
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] shadow-xl backdrop-blur-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-5">
-                <h2 className="text-sm font-semibold text-white">All activity</h2>
-                <div className="flex rounded-lg bg-black/30 p-0.5 text-[11px] font-medium">
-                    <button
-                        type="button"
-                        onClick={() => setTxTab("recent")}
-                        className={`rounded-md px-2 py-1 ${
-                            txTab === "recent"
-                                ? "bg-white/15 text-white"
-                                : "text-slate-500 hover:text-slate-300"
-                        }`}
-                    >
-                        Recent
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => setTxTab("all")}
-                        className={`rounded-md px-2 py-1 ${
-                            txTab === "all"
-                                ? "bg-white/15 text-white"
-                                : "text-slate-500 hover:text-slate-300"
-                        }`}
-                    >
-                        All
-                    </button>
-                </div>
-            </div>
-            <ul className="divide-y divide-white/5 px-2 py-2 sm:px-4">
-                {MOCK_TX.map((t) => (
-                    <li
-                        key={t.id}
-                        className="flex items-center gap-3 px-2 py-3 hover:bg-white/[0.03]"
-                    >
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-700 to-slate-900 text-xs font-bold text-slate-300">
-                            {t.name.slice(0, 1)}
-                        </span>
-                        <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium text-white">{t.name}</p>
-                            <p className="text-xs text-slate-500">{t.date}</p>
-                        </div>
-                        <p
-                            className={`shrink-0 text-sm font-semibold tabular-nums ${
-                                t.positive ? "text-emerald-400" : "text-slate-200"
-                            }`}
-                        >
-                            {t.amount > 0 ? "+" : ""}
-                            {t.amount.toLocaleString("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                            })}
-                        </p>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
-
-function AccountsSection() {
-    const cards = [
-        {
-            name: "Current account",
-            mask: "•••• 8891",
-            bal: "USD 6,240.12",
-            tint: "from-sky-600/30 to-blue-900/40",
-        },
-        {
-            name: "Savings",
-            mask: "•••• 1024",
-            bal: "USD 5,000.00",
-            tint: "from-violet-600/30 to-slate-900/40",
-        },
-        {
-            name: "World Mastercard",
-            mask: "•••• 4402",
-            bal: "USD 1,120.88 due",
-            tint: "from-slate-700/50 to-slate-900/60",
-        },
-    ];
-    return (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {cards.map((c) => (
-                <div
-                    key={c.name}
-                    className={`rounded-2xl border border-white/10 bg-gradient-to-br ${c.tint} p-5 shadow-lg`}
-                >
-                    <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        {c.name}
-                    </p>
-                    <p className="mt-2 font-mono text-sm text-slate-300">{c.mask}</p>
-                    <p className="mt-4 text-xl font-bold text-white">{c.bal}</p>
-                    <button
-                        type="button"
-                        className="mt-4 text-sm font-medium text-sky-400 hover:text-sky-300"
-                    >
-                        View details
-                    </button>
-                </div>
-            ))}
-        </div>
-    );
-}
-
-function InvestmentsSection() {
-    const rows = [
-        { name: "Global Equity Fund", val: "USD 12,400", ch: "+3.2%" },
-        { name: "Bond allocation", val: "USD 4,200", ch: "+0.4%" },
-        { name: "Cash / MMF", val: "USD 1,800", ch: "—" },
-    ];
-    return (
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
-            <p className="text-sm text-slate-500">Demo holdings</p>
-            <div className="mt-4 overflow-x-auto">
-                <table className="w-full min-w-[320px] text-left text-sm">
-                    <thead>
-                        <tr className="border-b border-white/10 text-xs uppercase text-slate-500">
-                            <th className="pb-3 pr-4 font-medium">Holding</th>
-                            <th className="pb-3 pr-4 font-medium">Value</th>
-                            <th className="pb-3 font-medium">Change</th>
-                        </tr>
-                    </thead>
-                    <tbody className="text-slate-300">
-                        {rows.map((r) => (
-                            <tr key={r.name} className="border-b border-white/5">
-                                <td className="py-3 pr-4 font-medium text-white">{r.name}</td>
-                                <td className="py-3 pr-4 tabular-nums">{r.val}</td>
-                                <td className="py-3 text-emerald-400/90">{r.ch}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
             </div>
         </div>
     );
@@ -691,14 +489,12 @@ function ToggleRow({ label, description, on, onChange }) {
                 role="switch"
                 aria-checked={on}
                 onClick={() => onChange(!on)}
-                className={`relative h-7 w-12 shrink-0 rounded-full transition ${
-                    on ? "bg-sky-600" : "bg-slate-700"
-                }`}
+                className={`relative h-7 w-12 shrink-0 rounded-full transition ${on ? "bg-sky-600" : "bg-slate-700"
+                    }`}
             >
                 <span
-                    className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition ${
-                        on ? "left-6" : "left-1"
-                    }`}
+                    className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition ${on ? "left-6" : "left-1"
+                        }`}
                 />
             </button>
         </div>
@@ -731,11 +527,10 @@ function MetricCard({ title, value, trend, trendUp, sub, spark }) {
                 <p className="text-2xl font-bold tabular-nums text-white sm:text-3xl">{value}</p>
                 {trend && (
                     <span
-                        className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
-                            trendUp
-                                ? "bg-emerald-500/15 text-emerald-400"
-                                : "bg-red-500/15 text-red-400"
-                        }`}
+                        className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${trendUp
+                            ? "bg-emerald-500/15 text-emerald-400"
+                            : "bg-red-500/15 text-red-400"
+                            }`}
                     >
                         <span aria-hidden>{trendUp ? "↑" : "↓"}</span>
                         {trend}
@@ -879,6 +674,31 @@ function IconMenu({ className }) {
     return (
         <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
             <path strokeWidth={2} strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    );
+}
+
+function IconWarning({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+    );
+}
+
+function IconSearch({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+    );
+}
+
+function IconSpinner({ className }) {
+    return (
+        <svg className={className} fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
     );
 }

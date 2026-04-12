@@ -94,9 +94,21 @@ export default function Home({ onOpenDashboard }) {
                 <div className="relative z-10 mx-auto max-w-6xl px-4 pb-6 pt-14 sm:px-6 sm:pt-16 lg:pb-10 lg:pt-20">
                     <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
                         <div>
-                            <h1 className="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
-                                BankIQ — banking intelligence, one conversation away
+                            <h1 className="text-balance text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.5rem]">
+                                <span className="text-white">Bank</span>
+                                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(56,189,248,0.6)]">
+                                    IQ
+                                </span>
                             </h1>
+
+                            <p className="mt-4 text-2xl font-bold leading-snug sm:text-3xl">
+                                <span className="text-cyan-400">Your 24/7</span>{" "}
+                                <span className="text-white">Intelligent Banking</span>
+                                <br />
+                                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                                    Colleague
+                                </span>
+                            </p>
 
                             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-amber-400/35 bg-amber-400/10 px-3 py-2 backdrop-blur-sm">
                                 <span
