@@ -15,12 +15,11 @@ export default function Navbar({ currentPage, onNavigate, onGoToSection }) {
                     onClick={() => onNavigate("home")}
                     className="flex items-center gap-2 text-left text-white transition hover:opacity-90"
                 >
-                    <span
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-400 to-blue-700 text-lg shadow-lg shadow-blue-900/40"
-                        aria-hidden
-                    >
-                        🏦
-                    </span>
+                    <img
+                        src="/Logo.jpeg"
+                        alt="BankIQ Logo"
+                        className="h-10 w-10 rounded-xl object-cover shadow-lg"
+                    />
                     <span className="font-semibold tracking-tight">BankIQ</span>
                 </button>
 

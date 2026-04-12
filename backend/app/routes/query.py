@@ -9,7 +9,8 @@ from app.services.insights import (
     generate_root_cause,
     generate_recommendation,
     generate_chart_data,
-    generate_forecast_explanation
+    generate_forecast_explanation,
+    generate_forecast_recommendation
 )
 
 # from app.services.forecast import forecast_series
@@ -183,7 +184,7 @@ def handle_query(request: dict):
         "root_cause": None
     },
 
-    "recommendation": None,
+    "recommendation": generate_forecast_recommendation(forecast_data, user_query),
 
     # ✅ send forecast as chart
     "chart": {
