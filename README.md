@@ -132,6 +132,8 @@ npm install
 npm start
 ```
 
+---
+
 ## 4. Tech Stack
 
 ### Frontend
@@ -157,3 +159,46 @@ npm start
 
 ### Database
 - **SQLite** – Relational database for storing and querying banking data
+
+## 5. Usage Examples
+
+### 5.1 BankIQ in Action  
+**(Features aligned with the "Talk to Data" problem statement)**
+
+The following examples demonstrate how BankIQ supports natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights.
+
+<p align="center">
+  <img src="PASTE_IMAGE_LINK_FOR_TALK_TO_DATA_FEATURES" alt="BankIQ in Action" width="850"/>
+</p>
+
+---
+
+### 5.2 Additional Features  
+**(Advanced capabilities aligned with "AI Predictive Forecasting")**
+
+These examples showcase predictive analytics, scenario comparison, short-term forecasting, and anomaly detection capabilities.
+
+<p align="center">
+  <img src="PASTE_IMAGE_LINK_FOR_FORECASTING_FEATURES" alt="Additional Features" width="100%"/>
+</p>
+
+---
+
+### 5.3 Try Yourself
+
+Go to our deployed link → **Dashboard** → paste any of the following commands and hit **Enter**.
+
+#### Main Queries
+```text
+What is posing Credit Risk this quarter?
+Compare North and South region revenues
+Which product should we focus on?
+Failure trend over time
+```
+
+#### Additional Queries
+```text
+what happens if churn increases by 10%?
+what will the next few weeks look like for transactions?
+Show branches currently at risk
+```
