@@ -59,7 +59,7 @@ https://bank-iq-nat-west.vercel.app/
 
 ### 3.2 Backend Setup
 
-1. Navigate to the backend directory:
+**1. Navigate to the backend directory:**
 
 ```bash
 cd backend
@@ -135,28 +135,28 @@ npm start
 
 ## 4. Tech Stack
 
-### Frontend
+### Frontend:
 - **React.js** – Frontend framework for building the user interface
 - **Recharts** – Data visualization library for charts and graphs
 - **Axios** – API communication between frontend and backend
 - **Tailwind CSS** – UI styling and responsive design
 
-### Backend
+### Backend:
 - **Python** – Core programming language
 - **FastAPI** – Backend framework for REST API development
 
-### Data Processing
+### Data Processing:
 - **Pandas** – Data manipulation and processing
 - **NumPy** – Numerical computations
 
-### AI / NLP
+### AI / NLP:
 - **Groq API** – LLM inference service
 - **LLaMA 3.1** – Natural language to SQL conversion and AI-generated insights
 
-### Forecasting
+### Forecasting:
 - **Prophet (Meta)** – Time-series forecasting and trend prediction
 
-### Database
+### Database:
 - **SQLite** – Relational database for storing and querying banking data
 
 ## 5. Usage Examples
@@ -164,7 +164,7 @@ npm start
 ### 5.1 BankIQ in Action  
 **(Features aligned with the "Talk to Data" problem statement)**
 
-The following examples demonstrate how BankIQ supports **natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights**.
+The following examples demonstrate how BankIQ supports **natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights:**.
 
 <p align="center">
   <img src="PASTE_IMAGE_LINK_FOR_TALK_TO_DATA_FEATURES" alt="BankIQ in Action" width="850"/>
@@ -175,7 +175,7 @@ The following examples demonstrate how BankIQ supports **natural language queryi
 ### 5.2 Additional Features  
 **(Advanced capabilities aligned with "AI Predictive Forecasting")**
 
-These examples showcase predictive **analytics, scenario comparison, short-term forecasting, and anomaly detection** capabilities.
+These examples showcase predictive **analytics, scenario comparison, short-term forecasting, and anomaly detection** capabilities:
 
 <p align="center">
   <img src="PASTE_IMAGE_LINK_FOR_FORECASTING_FEATURES" alt="Additional Features" width="100%"/>
@@ -183,7 +183,7 @@ These examples showcase predictive **analytics, scenario comparison, short-term 
 
 ---
 
-### 5.3 Try Yourself
+### 5.3 Try Yourself:
 
 Go to our deployed link → **Dashboard** → paste any of the following commands and hit **Enter**.
 
@@ -207,8 +207,7 @@ Show branches currently at risk
 ## 6. Architecture
 
 This section provides a high-level overview of the system design, implementation workflow, data flow, database schema, and project structure.
-
-### Included Diagrams
+### Included Diagrams:
 - **Implementation Flow**
 - **Data Flow Diagram**
 - **Database Schema**
@@ -222,11 +221,11 @@ This section provides a high-level overview of the system design, implementation
 
 ## 7. Limitations & Future Improvements
 
-### Current Limitations
+### Current Limitations:
 - Uses **Groq LLM API** due to its free accessibility and ease of integration, so query depth is limited.
 - **Trends** and **Warnings** tabs are presently hardcoded due to time constraints.
 
-### Future Improvements
+### Future Improvements:
 - Add **multi-metric forecasting**.
 - Implement **LLM response caching**.
 - Make **Trends** and **Warnings** fully dynamic.
