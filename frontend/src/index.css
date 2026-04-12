@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+@layer base {
+    button:not(:disabled),
+    [type="button"]:not(:disabled),
+    [type="submit"]:not(:disabled),
+    [type="reset"]:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]),
+    a[href],
+    select:not(:disabled),
+    summary {
+        cursor: pointer;
+    }
+
+    button:disabled,
+    [type="button"]:disabled,
+    [type="submit"]:disabled,
+    [type="reset"]:disabled {
+        cursor: not-allowed;
+    }
+
+    input[type="checkbox"]:not(:disabled),
+    input[type="radio"]:not(:disabled) {
+        cursor: pointer;
+    }
+
+    label[for],
+    label:has(input, select, textarea) {
+        cursor: pointer;
+    }
+}
+
+@layer utilities {
+    .bg-dot-grid {
+        background-image: radial-gradient(
+            rgba(255, 255, 255, 0.07) 1px,
+            transparent 1px
+        );
+        background-size: 26px 26px;
+    }
+}
