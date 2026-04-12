@@ -173,7 +173,7 @@ npm start
 
 The following examples demonstrate how BankIQ supports **natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights:**.
 
-<img width="100%" height="636" alt="image" src="https://github.com/user-attachments/assets/f2130f2e-89ab-4170-b6f3-b689d191641b" />
+<img width="100%" height="1272" alt="image" src="https://github.com/user-attachments/assets/82fd5b95-920b-4508-aa07-cac12a5461a2" />
 
 
 ---
@@ -183,7 +183,7 @@ The following examples demonstrate how BankIQ supports **natural language queryi
 
 These examples showcase predictive **analytics, scenario comparison, short-term forecasting, and anomaly detection** capabilities:
 
-<img width="100%" height="712" alt="image" src="https://github.com/user-attachments/assets/db61704e-128d-499c-8c72-131307fbd7cb" />
+<img width="100%" height="1458" alt="image" src="https://github.com/user-attachments/assets/9d5c2059-dc55-4363-ab89-e3a388300257" />
 
 
 ---
