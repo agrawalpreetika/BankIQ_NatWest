@@ -6,12 +6,10 @@
       <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
     </td>
     <td align="right" width="30%">
-      <img src="https://github.com/user-attachments/assets/ca4f54e5-bd1a-478e-ae08-3af40c135459" alt="BankIQ Logo" width=""/>
+      <img src="https://github.com/user-attachments/assets/ca4f54e5-bd1a-478e-ae08-3af40c135459" alt="BankIQ Logo" width="50%"/>
     </td>
   </tr>
 </table>
-
-![Uploading image.png…]()
 
 
 ## 1. Solution Overview
