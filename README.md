@@ -1,16 +1,15 @@
-<h1 align="center">Accept_All_Cookies</h1>
-
-<p align="center">
-  <img src="PASTE_YOUR_LOGO_LINK_HERE" alt="BankIQ Logo" width="180"/>
-</p>
-
-<h1 align="center">BankIQ</h1>
-
-<p align="center"><b>Your 24/7 Intelligent Banking Colleague</b></p>
-
-<p align="center">
-  An AI-powered talk-to-data platform for intelligent banking analytics, insights, and forecasting.
-</p>
+<table>
+  <tr>
+    <td align="left" width="70%">
+      <h2>Accept_All_Cookies</h2>
+      <h1>BankIQ</h1>
+      <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
+    </td>
+    <td align="right" width="30%">
+      <img src="PASTE_YOUR_LOGO_LINK_HERE" alt="BankIQ Logo" width="180"/>
+    </td>
+  </tr>
+</table>
 
 ## 1. Solution Overview
 
