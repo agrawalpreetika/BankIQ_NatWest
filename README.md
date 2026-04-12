@@ -218,9 +218,8 @@ This section provides a high-level overview of the system design, implementation
 - **Database Schema**
 - **File Structure**
 
-<p align="center">
-  <img src="PASTE_ARCHITECTURE_IMAGE_LINK_HERE" alt="BankIQ Architecture" width="900"/>
-</p>
+<img width="100%" height="1456" alt="image" src="https://github.com/user-attachments/assets/e67e2eb2-dec4-4fe7-aa4d-aaca36fafcdc" />
+
 
 ---
 
