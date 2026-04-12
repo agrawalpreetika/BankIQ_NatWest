@@ -1,3 +1,17 @@
+<h1 align="center">Accept_All_Cookies</h1>
+
+<p align="center">
+  <img src="PASTE_YOUR_LOGO_LINK_HERE" alt="BankIQ Logo" width="180"/>
+</p>
+
+<h1 align="center">BankIQ</h1>
+
+<p align="center"><b>Your 24/7 Intelligent Banking Colleague</b></p>
+
+<p align="center">
+  An AI-powered talk-to-data platform for intelligent banking analytics, insights, and forecasting.
+</p>
+
 ## 1. Solution Overview
 
 **BankIQ** is an AI-powered *talk-to-data* platform that enables users to query banking data using natural language and instantly receive insights, visualizations, and forecasts.
