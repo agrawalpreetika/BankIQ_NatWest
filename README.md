@@ -2,7 +2,7 @@
   <table>
   <tr>
     <td align="left" width="70%">
-      <h2>Accept_All_Cookies</h2>
+      <h3>Team Name: Accept_All_Cookies</h2>
       <h1>BankIQ</h1>
       <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
     </td>
@@ -46,3 +46,85 @@ Converts user queries in plain English into executable SQL queries using an LLM.
 
 - **Region-Based Filtering:**  
   Supports location-specific queries such as regional revenue trends and transaction insights.
+
+## 3. Install and Run Instructions
+
+### 3.1 Deployed Link
+Access the live deployed application here:  
+**[BankIQ Live Demo](PASTE_YOUR_PUBLIC_VERCEL_LINK_HERE)**
+
+---
+
+### 3.2 Backend Setup
+
+1. Navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+2. Create a virtual environment:
+
+```bash
+python -m venv venv
+```
+
+3. Activate the virtual environment:
+
+**Mac/Linux**
+```bash
+source venv/bin/activate
+```
+
+**Windows**
+```bash
+venv\Scripts\activate
+```
+
+4. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+5. Create a `.env` file:
+
+```bash
+touch .env
+```
+
+6. Add the following environment variable inside `.env`:
+
+```env
+GROQ_API_KEY=your_api_key_here
+```
+
+7. Run the backend server:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+---
+
+### 3.3 Frontend Setup
+
+> Open a new terminal window before running the frontend.
+
+1. Navigate to the frontend directory:
+
+```bash
+cd frontend
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the frontend application:
+
+```bash
+npm start
+```
