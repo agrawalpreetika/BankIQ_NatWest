@@ -5,8 +5,8 @@
       <h1>BankIQ</h1>
       <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
     </td>
-    <td align="right" width="30%">
-      <img src="https://github.com/user-attachments/assets/ca4f54e5-bd1a-478e-ae08-3af40c135459" alt="BankIQ Logo" width="50%"/>
+    <td align="right" width="50%">
+      <img src="https://github.com/user-attachments/assets/ca4f54e5-bd1a-478e-ae08-3af40c135459" alt="BankIQ Logo" width="100%"/>
     </td>
   </tr>
 </table>
