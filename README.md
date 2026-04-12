@@ -6,7 +6,7 @@
       <p>
           <b>Deployed Link:</b>
           <a href="https://bank-iq-nat-west.vercel.app/" target="_blank">
-            BankIQ Live Demo
+            BankIQ Live Demo (https://bank-iq-nat-west.vercel.app/)
           </a>
         </p>
       <h1>BankIQ</h1>
