@@ -578,31 +578,31 @@ function IconTransfer({ className }) {
     );
 }
 
-function IconTx({ className }) {
-    return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-            <path
-                strokeWidth={1.75}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5h10M9 12h10M9 19h10M4 5h.01M4 12h.01M4 19h.01"
-            />
-        </svg>
-    );
-}
+// function IconTx({ className }) {
+//     return (
+//         <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+//             <path
+//                 strokeWidth={1.75}
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 d="M9 5h10M9 12h10M9 19h10M4 5h.01M4 12h.01M4 19h.01"
+//             />
+//         </svg>
+//     );
+// }
 
-function IconCards({ className }) {
-    return (
-        <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-            <path
-                strokeWidth={1.75}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 10h18M6 6h12a3 3 0 013 3v8a3 3 0 01-3 3H6a3 3 0 01-3-3V9a3 3 0 013-3z"
-            />
-        </svg>
-    );
-}
+// function IconCards({ className }) {
+//     return (
+//         <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+//             <path
+//                 strokeWidth={1.75}
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 d="M3 10h18M6 6h12a3 3 0 013 3v8a3 3 0 01-3 3H6a3 3 0 01-3-3V9a3 3 0 013-3z"
+//             />
+//         </svg>
+//     );
+// }
 
 function IconChart({ className }) {
     return (
