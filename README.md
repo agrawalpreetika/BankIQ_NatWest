@@ -48,7 +48,7 @@ The solution is designed for **bank analysts, business teams, and non-technical 
 
 ## 3. Install and Run Instructions
 
-### 3.1 Deployed Link
+### 3.1 Deployed Link:
 Access the live deployed application here:   **[BankIQ Live Demo](https://bank-iq-nat-west.vercel.app/)**
 
 ```bash
@@ -65,43 +65,43 @@ https://bank-iq-nat-west.vercel.app/
 cd backend
 ```
 
-2. Create a virtual environment:
+**2. Create a virtual environment:**
 
 ```bash
 python -m venv venv
 ```
 
-3. Activate the virtual environment:
+**3. Activate the virtual environment:**
 
-**Mac/Linux**
-```bash
-source venv/bin/activate
-```
+- **Mac/Linux**
+  ```bash
+  source venv/bin/activate
+  ```
 
-**Windows**
-```bash
-venv\Scripts\activate
-```
+- Windows
+  ```bash
+  venv\Scripts\activate
+  ```
 
-4. Install dependencies:
+**4. Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-5. Create a `.env` file:
+**5. Create a `.env` file:**
 
 ```bash
 touch .env
 ```
 
-6. Add the following environment variable inside `.env`:
+**6. Add the following environment variable inside `.env`:**
 
 ```env
 GROQ_API_KEY=your_api_key_here
 ```
 
-7. Run the backend server:
+**7. Run the backend server:**
 
 ```bash
 uvicorn app.main:app --reload
@@ -113,19 +113,19 @@ uvicorn app.main:app --reload
 
 > Open a new terminal window before running the frontend.
 
-1. Navigate to the frontend directory:
+**1. Navigate to the frontend directory:**
 
 ```bash
 cd frontend
 ```
 
-2. Install dependencies:
+**2. Install dependencies:**
 
 ```bash
 npm install
 ```
 
-3. Start the frontend application:
+**3. Start the frontend application:**
 
 ```bash
 npm start
@@ -187,7 +187,7 @@ These examples showcase predictive **analytics, scenario comparison, short-term 
 
 Go to our deployed link → **Dashboard** → paste any of the following commands and hit **Enter**.
 
-#### Main Queries
+#### Main Queries:
 ```text
 What is posing Credit Risk this quarter?
 Compare North and South region revenues
@@ -195,7 +195,7 @@ Which product should we focus on?
 Failure trend over time
 ```
 
-#### Additional Queries
+#### Additional Queries:
 ```text
 what happens if churn increases by 10%?
 what will the next few weeks look like for transactions?
