@@ -2,8 +2,13 @@
   <table>
   <tr>
     <td align="left" width="70%">
-      Team Name: <h3> Accept_All_Cookies</h3>
-      Deployed Link: <h3>[BankIQ Live Demo](https://bank-iq-nat-west.vercel.app/)<h3>
+      <h3>Team Name: Accept_All_Cookies</h3>
+      <p>
+          <b>Deployed Link:</b>
+          <a href="https://bank-iq-nat-west.vercel.app/" target="_blank">
+            BankIQ Live Demo
+          </a>
+        </p>
       <h1>BankIQ</h1>
       <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
     </td>
