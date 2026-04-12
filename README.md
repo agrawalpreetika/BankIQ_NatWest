@@ -50,7 +50,7 @@ Converts user queries in plain English into executable SQL queries using an LLM.
 ## 3. Install and Run Instructions
 
 ### 3.1 Deployed Link
-Access the live deployed application here:   **[BankIQ Live Demo](PASTE_YOUR_PUBLIC_VERCEL_LINK_HERE)**
+Access the live deployed application here:   **[BankIQ Live Demo](https://bank-iq-nat-west.vercel.app/)**
 
 ```bash
 https://bank-iq-nat-west.vercel.app/
@@ -131,3 +131,29 @@ npm install
 ```bash
 npm start
 ```
+
+## 4. Tech Stack
+
+### Frontend
+- **React.js** – Frontend framework for building the user interface
+- **Recharts** – Data visualization library for charts and graphs
+- **Axios** – API communication between frontend and backend
+- **Tailwind CSS** – UI styling and responsive design
+
+### Backend
+- **Python** – Core programming language
+- **FastAPI** – Backend framework for REST API development
+
+### Data Processing
+- **Pandas** – Data manipulation and processing
+- **NumPy** – Numerical computations
+
+### AI / NLP
+- **Groq API** – LLM inference service
+- **LLaMA 3.1** – Natural language to SQL conversion and AI-generated insights
+
+### Forecasting
+- **Prophet (Meta)** – Time-series forecasting and trend prediction
+
+### Database
+- **SQLite** – Relational database for storing and querying banking data
