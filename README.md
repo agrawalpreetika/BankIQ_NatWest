@@ -1,6 +1,6 @@
 <table>
   <tr>
-    <td align="left" width="100%">
+    <td align="left" width="50%">
       <h2>Accept_All_Cookies</h2>
       <h1>BankIQ</h1>
       <p><i>Your 24/7 Intelligent Banking Colleague</i></p>
