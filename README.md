@@ -26,8 +26,7 @@ The solution is designed for **bank analysts, business teams, and non-technical 
 
 ## 2. Features
 
-- **Natural Language to SQL Conversion:**  
-Converts user queries in plain English into executable SQL queries using an LLM.
+- **Natural Language to SQL Conversion:** </br> Converts user queries in plain English into executable SQL queries using an LLM.
 
 - **Dynamic Data Visualization:**  
   Automatically generates **bar, line, and pie charts** based on the query result and data type.
@@ -165,7 +164,7 @@ npm start
 ### 5.1 BankIQ in Action  
 **(Features aligned with the "Talk to Data" problem statement)**
 
-The following examples demonstrate how BankIQ supports natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights.
+The following examples demonstrate how BankIQ supports **natural language querying, comparative analysis, trend understanding, reasoning, and data-driven insights**.
 
 <p align="center">
   <img src="PASTE_IMAGE_LINK_FOR_TALK_TO_DATA_FEATURES" alt="BankIQ in Action" width="850"/>
@@ -176,7 +175,7 @@ The following examples demonstrate how BankIQ supports natural language querying
 ### 5.2 Additional Features  
 **(Advanced capabilities aligned with "AI Predictive Forecasting")**
 
-These examples showcase predictive analytics, scenario comparison, short-term forecasting, and anomaly detection capabilities.
+These examples showcase predictive **analytics, scenario comparison, short-term forecasting, and anomaly detection** capabilities.
 
 <p align="center">
   <img src="PASTE_IMAGE_LINK_FOR_FORECASTING_FEATURES" alt="Additional Features" width="100%"/>
@@ -202,3 +201,32 @@ what happens if churn increases by 10%?
 what will the next few weeks look like for transactions?
 Show branches currently at risk
 ```
+
+---
+
+## 6. Architecture
+
+This section provides a high-level overview of the system design, implementation workflow, data flow, database schema, and project structure.
+
+### Included Diagrams
+- **Implementation Flow**
+- **Data Flow Diagram**
+- **Database Schema**
+- **File Structure**
+
+<p align="center">
+  <img src="PASTE_ARCHITECTURE_IMAGE_LINK_HERE" alt="BankIQ Architecture" width="900"/>
+</p>
+
+---
+
+## 7. Limitations & Future Improvements
+
+### Current Limitations
+- Uses **Groq LLM API** due to its free accessibility and ease of integration, so query depth is limited.
+- **Trends** and **Warnings** tabs are presently hardcoded due to time constraints.
+
+### Future Improvements
+- Add **multi-metric forecasting**.
+- Implement **LLM response caching**.
+- Make **Trends** and **Warnings** fully dynamic.
