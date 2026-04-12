@@ -50,8 +50,11 @@ Converts user queries in plain English into executable SQL queries using an LLM.
 ## 3. Install and Run Instructions
 
 ### 3.1 Deployed Link
-Access the live deployed application here:  
-**[BankIQ Live Demo](PASTE_YOUR_PUBLIC_VERCEL_LINK_HERE)**
+Access the live deployed application here:   **[BankIQ Live Demo](PASTE_YOUR_PUBLIC_VERCEL_LINK_HERE)**
+
+```bash
+https://bank-iq-nat-west.vercel.app/
+```
 
 ---
 
