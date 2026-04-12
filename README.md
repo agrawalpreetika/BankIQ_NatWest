@@ -22,7 +22,7 @@ It eliminates the need for manual SQL queries and static dashboards by convertin
 
 The solution is designed for **bank analysts, business teams, and non-technical stakeholders** who need fast, intelligent access to banking insights for better decision-making.
 
-<img width="100%" height="246" alt="image" src="https://github.com/user-attachments/assets/3a4616bf-8736-48f2-b793-c8b4b7a97a95" />
+<img width="100%" height="490" alt="image" src="https://github.com/user-attachments/assets/4ad83327-e74d-429b-8424-bd24c707427b" />
 
 
 ## 2. Features
