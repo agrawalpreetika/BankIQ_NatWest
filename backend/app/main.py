@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import query
+from app.routes import trends
+
 
 app = FastAPI()
 
@@ -20,3 +22,5 @@ app.add_middleware(
 
 # routes
 app.include_router(query.router, prefix="/query")
+
+app.include_router(trends.router)

@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ThemeBackground from "../components/ThemeBackground";
 import ChatBox from "../components/ChatBox";
 import InsightCard from "../components/InsightCard";
 import ChartView from "../components/ChartView";
 import WarningBox from "../components/WarningBox";
 import { askQuery } from "../services/api";
+import { getTrends } from "../services/api";
 
 const NAV = [
     { id: "dash", label: "Dashboard", icon: IconDashboard },
     { id: "warnings", label: "Warnings", icon: IconWarning },
     { id: "trends", label: "Trends", icon: IconChart },
 ];
+
+
 
 const QUICK_QUERIES = [
     "Show total revenue",
@@ -24,19 +27,19 @@ const QUICK_QUERIES = [
     "Compare North vs South revenue"
 ];
 
-const SPENDING = [
-    { label: "Food", pct: 72, color: "bg-sky-400" },
-    { label: "Rent", pct: 100, color: "bg-violet-400" },
-    { label: "Transport", pct: 45, color: "bg-amber-400" },
-    { label: "Utilities", pct: 58, color: "bg-emerald-400" },
-];
+// const SPENDING = [
+//     { label: "Food", pct: 72, color: "bg-sky-400" },
+//     { label: "Rent", pct: 100, color: "bg-violet-400" },
+//     { label: "Transport", pct: 45, color: "bg-amber-400" },
+//     { label: "Utilities", pct: 58, color: "bg-emerald-400" },
+// ];
 
-const QUICK_CONTACTS = [
-    "from-sky-400 to-blue-600",
-    "from-violet-400 to-fuchsia-500",
-    "from-emerald-400 to-teal-600",
-    "from-amber-400 to-orange-500",
-];
+// const QUICK_CONTACTS = [
+//     "from-sky-400 to-blue-600",
+//     "from-violet-400 to-fuchsia-500",
+//     "from-emerald-400 to-teal-600",
+//     "from-amber-400 to-orange-500",
+// ];
 
 const PAGE_TITLES = {
     dash: { title: "Dashboard", subtitle: "Overview · BankIQ workspace" },
@@ -66,6 +69,14 @@ export default function Dashboard() {
         setActiveNav(id);
         setSidebarOpen(false);
     };
+    // const [trends, setTrends] = useState(null);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const data = await getTrends();
+    //         setTrends(data);
+    //     };
+    //     fetchData();
+    // }, []);
 
     const pageMeta = PAGE_TITLES[activeNav] ?? PAGE_TITLES.dash;
 
@@ -368,26 +379,15 @@ export default function Dashboard() {
 }
 
 function WarningsSection({ onBack }) {
-    const warnings = [
-        {
-            title: "Revenue Drop Detected",
-            desc: "Regional revenue in the North has dropped by 18% compared to the previous 7-day moving average.",
-            severity: "high",
-            date: "Today, 09:45 AM"
-        },
-        {
-            title: "Transaction Failure Spike",
-            desc: "Payment gateway failures exceeded threshold (currently at 4.2%). Primary issues traced to processor timeouts.",
-            severity: "critical",
-            date: "Yesterday, 14:20 PM"
-        },
-        {
-            title: "Elevated Complaint Volume",
-            desc: "Customer complaints regarding card declines have spiked temporarily by 12%. No underlying severe system outage detected yet.",
-            severity: "medium",
-            date: "10 Apr, 11:00 AM"
-        }
-    ];
+    const [warnings, setWarnings] = useState([]);
+
+    useEffect(() => {
+        const fetchWarnings = async () => {
+            const data = await getTrends();   // same API
+            setWarnings(data.warnings || []);
+        };
+        fetchWarnings();
+    }, []);
 
     return (
         <div className="space-y-5">
@@ -399,36 +399,55 @@ function WarningsSection({ onBack }) {
                 ← Back to overview
             </button>
             <div className="grid gap-4 lg:grid-cols-2">
-                {warnings.map((w, i) => (
-                    <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm shadow-xl">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-sm font-semibold text-white">{w.title}</h3>
-                            <span className={`px-2 py-1 text-[10px] uppercase tracking-wider font-bold rounded-lg ${w.severity === 'critical' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : w.severity === 'high' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}`}>
-                                {w.severity}
-                            </span>
+                {warnings.length === 0 ? (
+                    <p className="text-slate-400 text-sm">No warnings detected ✅</p>
+                ) : (
+
+
+                    warnings.map((w, i) => (
+                        <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm shadow-xl">
+
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-sm font-semibold text-white">{w.title}</h3>
+
+                                <span className={`px-2 py-1 text-[10px] uppercase tracking-wider font-bold rounded-lg ${w.severity === 'critical'
+                                    ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                                    : w.severity === 'high'
+                                        ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                                        : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                                    }`}>
+                                    {w.severity}
+                                </span>
+                            </div>
+
+                            <p className="text-sm text-slate-400 leading-relaxed">
+                                {w.desc}
+                            </p>
+
+                            <p className="mt-4 text-xs font-medium text-slate-500">
+                                {w.date}
+                            </p>
                         </div>
-                        <p className="text-sm text-slate-400 leading-relaxed">{w.desc}</p>
-                        <p className="mt-4 text-xs font-medium text-slate-500">{w.date}</p>
-                    </div>
-                ))}
+                    ))
+
+
+                )}
             </div>
         </div>
     );
 }
 
 function TrendsSection({ onBack }) {
-    const mockChart = {
-        type: "line",
-        data: [
-            {"label": "Mon", "value": 400},
-            {"label": "Tue", "value": 300},
-            {"label": "Wed", "value": 550},
-            {"label": "Thu", "value": 450},
-            {"label": "Fri", "value": 700},
-            {"label": "Sat", "value": 650},
-            {"label": "Sun", "value": 800}
-        ]
-    };
+
+    const [trends, setTrends] = useState(null);
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getTrends();
+            setTrends(data.charts);
+        };
+        fetchData();
+    }, []);
+
 
     return (
         <div className="space-y-5">
@@ -439,16 +458,30 @@ function TrendsSection({ onBack }) {
             >
                 ← Back to overview
             </button>
-            
-            <div className="grid gap-4">
-                <div className="flex flex-col rounded-2xl border border-white/10 bg-[#030712]/80 p-5 shadow-xl shadow-black/30 backdrop-blur-sm">
-                    <h2 className="text-lg font-semibold text-white mb-2">Weekly Revenue Trend</h2>
-                    <p className="text-xs text-slate-500 mb-6">Aggregate transactions showing steady weekend growth peaking clearly on Sundays.</p>
-                    <div className="min-h-[300px] flex-1">
-                        <ChartView chart={mockChart} embedded />
-                    </div>
-                </div>
-            </div>
+
+            {trends && (
+                <>
+                    <ChartView
+                        title="Revenue Trend (successful transactions)"
+                        chart={{ type: "line", data: trends.revenue }}
+                    />
+
+                    <ChartView
+                        title="Transactions"
+                        chart={{ type: "bar", data: trends.transactions }}
+                    />
+
+                    <ChartView
+                        title="Customers Joined"
+                        chart={{ type: "bar", data: trends.customers }}
+                    />
+
+                    <ChartView
+                        title="Complaints"
+                        chart={{ type: "bar", data: trends.complaints }}
+                    />
+                </>
+            )}
         </div>
     );
 }

@@ -14,7 +14,7 @@ from app.services.insights import (
 )
 
 # from app.services.forecast import forecast_series
-from app.services.anomaly import detect_anomaly
+from app.services.anomaly import detect_anomalies
 
 from app.utils.query_router import detect_query_type
 import pandas as pd
@@ -214,7 +214,7 @@ def handle_query(request: dict):
         sql_query = text_to_sql(user_query)
         data = run_query(sql_query)
 
-        warning = detect_anomaly(data)
+        warning = detect_anomalies(data)
 
         return {
             "type": "anomaly",

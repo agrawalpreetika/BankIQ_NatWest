@@ -102,7 +102,7 @@ function ChartInner({ type, data }) {
     );
 }
 
-export default function ChartView({ chart, embedded = false }) {
+export default function ChartView({ chart, title, embedded = false }) {
     const hasData = chart?.data?.length;
 
     if (!hasData) {
@@ -130,7 +130,9 @@ export default function ChartView({ chart, embedded = false }) {
 
     return (
         <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 shadow-xl shadow-black/25 backdrop-blur-sm">
-            <h2 className="text-lg font-semibold text-white">Visualization</h2>
+            <h2 className="text-lg font-semibold text-white">
+                {title || "Visualization"}
+            </h2>
             <p className="mt-1 text-xs text-slate-500">Chart type: {type}</p>
             {chartBlock}
         </div>

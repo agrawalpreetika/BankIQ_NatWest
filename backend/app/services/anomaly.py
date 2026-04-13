@@ -1,43 +1,46 @@
-# def detect_anomaly(data, forecast_data):
-#     try:
-#         if not data or not forecast_data:
-#             return None
+import numpy as np
 
-#         latest_actual = list(data[0].values())[-1]
-#         expected = forecast_data["forecast"][0]
+def detect_anomalies(data, label="value"):
+    if not data or len(data) < 3:
+        return []
 
-#         if latest_actual > expected * 1.2:
-#             return "Spike detected: Value is higher than expected range."
+    values = [d[label] for d in data if d[label] is not None]
 
-#         if latest_actual < expected * 0.8:
-#             return "Drop detected: Value is lower than expected range."
+    if len(values) < 3:
+        return []
 
-#         return None
+    mean = np.mean(values)
+    std = np.std(values)
 
-#     except Exception:
-#         return None
+    if std == 0:
+        return []
 
-def detect_anomaly(data):
-    try:
-        if not data:
-            return None
+    threshold_high = mean + 2 * std
+    threshold_low = mean - 2 * std
 
-        row = data[0]
-        values = list(row.values())
+    anomalies = []
 
-        if len(values) == 0:
-            return None
+    for d in data:
+        val = d.get(label)
+        if val is None:
+            continue
 
-        current = values[-1]
+        if val > threshold_high:
+            severity = "critical" if val > mean + 3*std else "high"
 
-        if isinstance(current, (int, float)):
-            if current > 1_000_000:
-                return "⚠️ Revenue spike detected — could be seasonal surge or unusual activity."
+            anomalies.append({
+                "title": "Spike detected",
+                "desc": f"Value {val} is significantly higher than expected ({round(mean,2)})",
+                "severity": severity,
+                "date": d["label"]
+            })
 
-            if current < 500:
-                return "⚠️ Revenue unusually low — possible drop in transactions or system issue."
+        elif val < threshold_low:
+            anomalies.append({
+                "title": "Drop detected",
+                "desc": f"Value {val} is significantly lower than expected ({round(mean,2)})",
+                "severity": "medium",
+                "date": d["label"]
+            })
 
-        return None
-
-    except Exception:
-        return None
+    return anomalies

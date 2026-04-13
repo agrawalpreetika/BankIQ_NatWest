@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const API =
+const API=
   process.env.REACT_APP_API_URL || "http://127.0.0.1:8000/query/";
+
 
 export const askQuery = async (query) => {
   try {
@@ -11,4 +12,9 @@ export const askQuery = async (query) => {
     console.error(err);
     return null;
   }
+};
+
+export const getTrends = async () => {
+  const res = await fetch("http://127.0.0.1:8000/trends");
+  return res.json();
 };
